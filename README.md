@@ -46,10 +46,13 @@ Dataset summary:
   * Slight = non-severe injury
 
 The target was imbalanced, with Severe casualties representing approximately 20.8% of records.
+<img width="833" height="269" alt="image" src="https://github.com/user-attachments/assets/e4225d07-3683-4478-bc26-9a1b63527ee1" />
 
 ---
 
 ## Methodology
+
+<img width="1492" height="1054" alt="image" src="https://github.com/user-attachments/assets/4dbce984-3507-4fe1-9c76-5f473e3d5a9d" />
 
 ### 1. Data Preparation
 
@@ -154,6 +157,12 @@ The final model correctly identified 3,673 of 5,658 Severe casualties.
 
 The model is recall-oriented and is best interpreted as a **post-collision risk-screening tool**, not a definitive severity classifier.
 
+<img width="401" height="243" alt="image" src="https://github.com/user-attachments/assets/6a2ef014-d21b-4c3f-9a2e-dfe0836e9fb2" />
+
+<img width="466" height="335" alt="image" src="https://github.com/user-attachments/assets/16105548-fbad-4547-bc26-0e4b9d9d6a9a" />
+
+<img width="469" height="331" alt="image" src="https://github.com/user-attachments/assets/f8f132d2-a7da-4a17-8059-227f2284b637" />
+
 ---
 
 ## Model Interpretation
@@ -168,6 +177,9 @@ The strongest grouped predictors were:
 
 These predictors highlight the value of merging casualty, vehicle, and collision-level data instead of relying only on collision-level information.
 
+<img width="1067" height="827" alt="image" src="https://github.com/user-attachments/assets/1f39d1c1-fe56-44d7-8960-64bfbe265b1f" />
+<img width="959" height="1127" alt="image" src="https://github.com/user-attachments/assets/25111d02-06ef-4c12-b54d-398db13d4482" />
+
 ---
 
 ## Oversampling Sensitivity Analysis
@@ -177,6 +189,8 @@ A supplementary experiment compared cost-sensitive XGBoost with RandomOverSample
 Random oversampling did not improve Severe-class detection. It produced only a negligible macro-F1 gain while reducing Severe recall.
 
 Cost-sensitive XGBoost was therefore retained as the final approach.
+
+<img width="1187" height="587" alt="image" src="https://github.com/user-attachments/assets/4286a409-6b6d-4be7-9c9f-d72c1f103dc7" />
 
 ---
 
