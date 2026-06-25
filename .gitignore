@@ -1,0 +1,21 @@
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+
+# Data files
+*.csv
+*.xls
+*.xlsx
+
+# Model artifacts
+*.pkl
+*.joblib
+
+# Environment files
+.env
+venv/
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
