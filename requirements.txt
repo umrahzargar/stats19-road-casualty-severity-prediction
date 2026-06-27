@@ -8,3 +8,5 @@ shap
 scipy
 imbalanced-learn
 jupyter
+cloudpickle
+joblib
