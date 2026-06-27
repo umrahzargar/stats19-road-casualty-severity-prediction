@@ -1,5 +1,27 @@
 # Injury Severity Prediction for Road Casualties in Great Britain
 
+## Live Streamlit App
+
+**Try the deployed app here:**
+https://stats19-road-casualty-severity-prediction.streamlit.app/
+
+The Streamlit app allows users to:
+
+* view the project summary and model purpose
+* test single-case predictions using built-in demo samples
+* upload a preprocessed STATS19-style file for batch prediction
+* download an example input template
+* generate Severe-class probabilities and predicted severity labels
+* filter predictions by probability threshold
+* download full prediction results
+* view model performance metrics
+* explore SHAP-based feature importance
+* review the oversampling sensitivity analysis
+
+> **Important:** The app is an academic and portfolio demonstration only. It should not be used for real legal, medical, emergency, policing, insurance, or road safety decision-making.
+
+---
+
 ## Project Overview
 
 This project applies machine learning to predict whether a road casualty outcome is **Severe** or **Slight** using the 2023 Great Britain STATS19 road safety dataset.
@@ -25,7 +47,7 @@ This project investigates whether STATS19 administrative records can distinguish
 
 ## Dataset
 
-The project uses the 2023 Great Britain STATS19 road safety dataset.
+The project uses the **2023 Great Britain STATS19 road safety dataset**.
 
 Three linked tables were used:
 
@@ -43,16 +65,17 @@ Dataset summary:
 * Binary target:
 
   * Severe = Fatal or Serious injury
-  * Slight = non-severe injury
+  * Slight = Non-severe injury
 
-The target was imbalanced, with Severe casualties representing approximately 20.8% of records.
-<img width="833" height="269" alt="image" src="https://github.com/user-attachments/assets/e4225d07-3683-4478-bc26-9a1b63527ee1" />
+The target was imbalanced, with Severe casualties representing approximately **20.8%** of records.
+
+<img width="833" height="269" alt="Target distribution" src="https://github.com/user-attachments/assets/e4225d07-3683-4478-bc26-9a1b63527ee1" />
 
 ---
 
 ## Methodology
 
-<img width="1492" height="1054" alt="image" src="https://github.com/user-attachments/assets/4dbce984-3507-4fe1-9c76-5f473e3d5a9d" />
+<img width="1492" height="1054" alt="Project methodology" src="https://github.com/user-attachments/assets/4dbce984-3507-4fe1-9c76-5f473e3d5a9d" />
 
 ### 1. Data Preparation
 
@@ -138,7 +161,7 @@ A safety-aware threshold rule was used to avoid reducing Severe-class recall.
 
 ## Results
 
-The final selected model was a tuned **XGBoost classifier**.
+The final selected model was a tuned **cost-sensitive XGBoost classifier**.
 
 Held-out test performance:
 
@@ -153,15 +176,66 @@ Held-out test performance:
 | ROC-AUC           | 0.739 |
 | Average Precision | 0.430 |
 
-The final model correctly identified 3,673 of 5,658 Severe casualties.
+The final model correctly identified **3,673 of 5,658 Severe casualties**.
 
 The model is recall-oriented and is best interpreted as a **post-collision risk-screening tool**, not a definitive severity classifier.
 
-<img width="401" height="243" alt="image" src="https://github.com/user-attachments/assets/6a2ef014-d21b-4c3f-9a2e-dfe0836e9fb2" />
+<img width="401" height="243" alt="Model result chart" src="https://github.com/user-attachments/assets/6a2ef014-d21b-4c3f-9a2e-dfe0836e9fb2" />
 
-<img width="466" height="335" alt="image" src="https://github.com/user-attachments/assets/16105548-fbad-4547-bc26-0e4b9d9d6a9a" />
+<img width="466" height="335" alt="Model performance chart" src="https://github.com/user-attachments/assets/16105548-fbad-4547-bc26-0e4b9d9d6a9a" />
 
-<img width="469" height="331" alt="image" src="https://github.com/user-attachments/assets/f8f132d2-a7da-4a17-8059-227f2284b637" />
+<img width="469" height="331" alt="Model evaluation chart" src="https://github.com/user-attachments/assets/f8f132d2-a7da-4a17-8059-227f2284b637" />
+
+---
+
+## Streamlit Deployment
+
+The final model was deployed using **Streamlit Community Cloud**.
+
+The app provides an interactive interface for exploring the trained model.
+
+### App Features
+
+#### 1. Project Summary
+
+The home page explains the dataset, modelling task, target definition, final model, and responsible-use disclaimer.
+
+#### 2. Single-Case Prediction Demo
+
+Users can select a saved demo sample from the test set. The app returns:
+
+* Severe probability
+* selected decision threshold
+* predicted class
+* input feature values for the selected case
+
+#### 3. Batch Upload Prediction
+
+Users can upload a preprocessed STATS19-style file with the same feature columns as the model input.
+
+The app then:
+
+* checks whether required columns are present
+* ignores extra columns if present
+* predicts Severe probability for all rows
+* applies the selected classification threshold
+* shows a prediction summary
+* displays a risk distribution chart
+* allows probability-threshold filtering
+* shows highest-risk cases
+* allows users to download prediction results as CSV
+
+#### 4. Model Performance Page
+
+The app displays the main model evaluation metrics, including Macro-F1, Severe recall, Severe precision, ROC-AUC, Average Precision, and the selected threshold.
+
+#### 5. SHAP Feature Importance Page
+
+The app displays grouped SHAP feature importance to support model interpretability.
+
+#### 6. Oversampling Sensitivity Page
+
+The app compares the final cost-sensitive XGBoost model against an oversampled XGBoost model using RandomOverSampler.
 
 ---
 
@@ -177,8 +251,9 @@ The strongest grouped predictors were:
 
 These predictors highlight the value of merging casualty, vehicle, and collision-level data instead of relying only on collision-level information.
 
-<img width="1067" height="827" alt="image" src="https://github.com/user-attachments/assets/1f39d1c1-fe56-44d7-8960-64bfbe265b1f" />
-<img width="959" height="1127" alt="image" src="https://github.com/user-attachments/assets/25111d02-06ef-4c12-b54d-398db13d4482" />
+<img width="1067" height="827" alt="SHAP grouped feature importance" src="https://github.com/user-attachments/assets/1f39d1c1-fe56-44d7-8960-64bfbe265b1f" />
+
+<img width="959" height="1127" alt="SHAP feature interpretation" src="https://github.com/user-attachments/assets/25111d02-06ef-4c12-b54d-398db13d4482" />
 
 ---
 
@@ -186,11 +261,11 @@ These predictors highlight the value of merging casualty, vehicle, and collision
 
 A supplementary experiment compared cost-sensitive XGBoost with RandomOverSampler.
 
-Random oversampling did not improve Severe-class detection. It produced only a negligible macro-F1 gain while reducing Severe recall.
+Random oversampling did not improve Severe-class detection overall. It produced only a negligible macro-F1 gain while reducing Severe recall.
 
 Cost-sensitive XGBoost was therefore retained as the final approach.
 
-<img width="1187" height="587" alt="image" src="https://github.com/user-attachments/assets/4286a409-6b6d-4be7-9c9f-d72c1f103dc7" />
+<img width="1187" height="587" alt="Oversampling sensitivity comparison" src="https://github.com/user-attachments/assets/4286a409-6b6d-4be7-9c9f-d72c1f103dc7" />
 
 ---
 
@@ -202,9 +277,11 @@ This project demonstrates:
 * grouped validation by collision identifier to reduce data leakage
 * comparison of linear and ensemble classifiers
 * imbalance-aware model evaluation
-* SHAP-based model interpretation
 * safety-aware threshold selection
-* realistic discussion of limitations and deployment context
+* SHAP-based model interpretation
+* oversampling sensitivity analysis
+* interactive Streamlit deployment
+* batch prediction using uploaded STATS19-style files
 
 ---
 
@@ -214,25 +291,40 @@ This project demonstrates:
 stats19-road-casualty-severity-prediction/
 │
 ├── README.md
+├── app.py
 ├── requirements.txt
 ├── .gitignore
 │
-├── notebooks/
-│   └── stats19_road_casualty_severity_prediction.ipynb
+├── models/
+│   ├── stats19_xgb_pipeline.pkl
+│   ├── model_metrics.json
+│   ├── selected_features.json
+│   ├── shap_values.pkl
+│   ├── shap_feature_names.pkl
+│   ├── X_shap_raw.pkl
+│   ├── X_shap_processed_dense.pkl
+│   └── shap_sample.pkl
 │
-├── reports/
-│   └── stats19_road_casualty_severity_report.pdf
+├── outputs/
+│   ├── X_test.xls
+│   ├── y_test.xls
+│   ├── X_test_demo_sample.xls
+│   ├── X_test_sample.xls
+│   ├── test_predictions.xls
+│   ├── shap_grouped_feature_importance.xls
+│   ├── shap_transformed_feature_importance.xls
+│   └── oversampling_sensitivity_summary.xls
 │
-├── data/
-│   └── README.md
+├── Notebook/
+│   └── project notebook files
 │
-└── images/
-    └── README.md
+└── Report/
+    └── project report files
 ```
 
 ---
 
-## How to Run
+## How to Run Locally
 
 1. Clone the repository:
 
@@ -246,25 +338,90 @@ git clone https://github.com/umrahzargar/stats19-road-casualty-severity-predicti
 cd stats19-road-casualty-severity-prediction
 ```
 
-3. Install dependencies:
+3. Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+4. Activate the virtual environment.
+
+On Windows Command Prompt:
+
+```bash
+.venv\Scripts\activate
+```
+
+On macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+5. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Place the required STATS19 CSV files in the `data/` folder.
-
-5. Open the notebook:
+6. Run the Streamlit app:
 
 ```bash
-jupyter notebook notebooks/stats19_road_casualty_severity_prediction.ipynb
+streamlit run app.py
 ```
+
+The app should open locally at:
+
+```text
+http://localhost:8501
+```
+
+---
+
+## Requirements
+
+The main Python libraries used are:
+
+* streamlit
+* pandas
+* numpy
+* scikit-learn
+* xgboost
+* cloudpickle
+* shap
+* matplotlib
+* openpyxl
+* xlrd
+
+---
+
+## Deployment Notes
+
+The model was saved using `cloudpickle` because standard `joblib` saving caused a pickling issue with a lambda function inside the pipeline.
+
+The Streamlit app therefore loads the model using:
+
+```python
+import cloudpickle
+
+with open("models/stats19_xgb_pipeline.pkl", "rb") as f:
+    model = cloudpickle.load(f)
+```
+
+A small compatibility fix was also added to support loading the saved Scikit-learn pipeline across deployment environments.
 
 ---
 
 ## Limitations and Future Work
 
-The project uses only 2023 data, so temporal generalisation across multiple years was not tested. Probability calibration was not assessed, and the tuning budget was constrained by time and computational feasibility.
+The project has several important limitations:
+
+* The model uses only 2023 data, so temporal generalisation across multiple years has not been fully tested.
+* Uploaded files must already be preprocessed into the same feature format as the demo input file.
+* Probability calibration was not fully assessed.
+* The model is recall-oriented and should be interpreted as a screening tool, not a definitive classifier.
+* Spatial detail is limited.
+* The tuning budget was constrained by time and computational feasibility.
 
 Future work could include:
 
@@ -273,7 +430,16 @@ Future work could include:
 * wider hyperparameter search
 * SMOTENC or oversampling before encoding
 * spatial aggregation for geographically targeted road safety analysis
-* interactive dashboard deployment using Streamlit or Power BI
+* automated preprocessing for raw STATS19 files from other years
+* richer dashboard features such as maps, temporal trends, and subgroup analysis
+
+---
+
+## Responsible Use
+
+This project is intended for academic learning, portfolio demonstration, and exploratory road safety analysis.
+
+It should **not** be used for real-world legal, medical, emergency, policing, insurance, or operational road safety decision-making.
 
 ---
 
